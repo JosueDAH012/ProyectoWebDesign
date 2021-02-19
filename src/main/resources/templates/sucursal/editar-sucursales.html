@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/template.html :: headerfiles">
+        </th:block> /*/-->
+ </head>
+<body>
+<div th:replace="fragments/template.html :: header"> </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form  th:action="@{/admin/sucursal/{modo}/{codigo}(modo=${modo},codigo=${sucursal.id})}" th:object="${sucursal}" method="post" >
+                <label><h2>Sucursal</h2></label>
+                <input type="hidden" th:field="*{id}">
+                <div class="form-group">
+                    <div class="col-8">
+                        <input type="text" th:field="*{nombre}" placeholder="Nombre"
+                               class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-8">
+                        <input type="text" th:field="*{provincia}" placeholder="Provincia"
+                               class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-8">
+                        <input type="text" th:field="*{canton}" placeholder="Cantón"
+                               class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-8">
+                        <input type="text" th:field="*{distrito}" placeholder="Distrito"
+                               class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-8">
+                        <input type="text" th:field="*{telefono}" placeholder="Teléfono"
+                               class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <a th:href="@{/admin/sucursal/}" class="btn btn-warning">Volver</a>
+                    <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/template.html :: footer"></div>
+</body>
+</html>

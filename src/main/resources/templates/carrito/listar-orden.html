@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/template.html :: headerfiles">
+    </th:block> /*/-->
+</head>
+<body>
+<div th:replace="fragments/template.html :: header"> </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8"><h1>Carrito</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table id="tablaOrden" class="table table-striped">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th>C&oacute;digo</th>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Ver</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr th:if="${orden.items.empty}">
+                        <td colspan="7">No hay productos en el carrito</td>
+                    </tr>
+                    <tr th:each="itemOrden : ${orden.items}">
+                        <td scope="row" th:text="${itemOrden.producto.id}"/>
+                        <td th:text="${itemOrden.producto.nombre}"/>
+                        <td th:text="'₡' + ${#numbers.formatDecimal(itemOrden.producto.precio, 0, 'COMMA', 2, 'POINT')}"/>
+                        <td th:text="${itemOrden.cantidad}"/>
+                        <td th:text="'₡' + ${#numbers.formatDecimal(itemOrden.producto.precio * itemOrden.cantidad, 0, 'COMMA', 2, 'POINT')}"/>
+                        <td><a th:href="@{/producto/{id}(id=${itemOrden.producto.id})}" class="btn btn-info">Ver</a></td>
+                        <td><a th:href="@{/carrito/eliminar/{id}(id=${itemOrden.id})}" class="btn btn-danger">Eliminar</a></td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+
+                <!--Table footer-->
+                <tfooter th:if="${!orden.items.empty}" th:with="subtotal=${#aggregates.sum(orden.items.![subtotal])}">
+                    <tr>
+                        <td colspan="4">TOTAL</td>
+                        <td><b th:text="'₡' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}"/></td>
+                        <th></th>
+                        <th><a th:href="@{/facturar}" class="btn btn-success">Comprar</a></th>
+                    </tr>
+                </tfooter>
+                <!--Table footer-->
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/template.html :: notificaciones"></div>
+<div th:replace="fragments/template.html :: footer"></div>
+</body>
+</html>

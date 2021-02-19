@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/template.html :: headerfiles">
+        </th:block> /*/-->
+</head>
+<body>
+<div th:insert="fragments/template.html :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div th:if="${message}">
+                <h2 th:text="${message}"/>
+            </div>
+
+            <div>
+                <form method="post" enctype="multipart/form-data" action="/admin/subirimagen/">
+                        <tr>
+                            <td>Archivo a Subir:</td>
+                            <td><input type="file" name="file"/></td>
+                        </tr>
+                        <tr>
+                            <br>
+                            <td><input type="submit" value="Upload"/></td>
+                        </tr>
+                </form>
+            </div>
+
+            <!--Verifica el archivo subido -->
+
+            <div>
+                <ul>
+                    <li th:each="file : ${files}">
+                        <a th:href="${file}" th:text="${file}"/>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/template.html :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/template.html :: headerfiles">
+        </th:block> /*/-->
+</head>
+<body>
+<div th:insert="fragments/template.html :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form th:action="@{/admin/productos/{modo}/{id}(modo=${modo},id=${producto.id})}" method="post" th:object="${producto}">
+                <input type="hidden" id="id" name="id" th:value="${producto.id}">
+                <label for="ID">Productos</label>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Nombre del producto"
+                           type="text" th:field="*{nombre}"/>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" th:field="*{tipoProducto.id}">
+                        <option th:each="tipoProducto : ${listaTipoProducto}"
+                                th:value="${tipoProducto.id}"
+                                th:text="${tipoProducto.nombre}">Admin
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Precio del producto"
+                           type="number" th:field="*{precio}"/>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" th:field="*{marca.id}">
+                        <option th:each="marca : ${listaMarcas}"
+                                th:value="${marca.id}"
+                                th:text="${marca.nombre}">Admin
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Modelo"
+                           type="text" th:field="*{modelo}"/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Descripcion"
+                           type="text" th:field="*{descripcion}"/>
+                </div>
+                <div class="form-group">
+                    <a th:href="@{/admin/productos/}" class="btn btn-warning">Volver</a>
+                    <input class="btn btn-primary" type="submit" value="Guardar">
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" th:each="imagenTmp : ${producto.imagenes}">
+            <img th:src="@{/image/productos/{nombre}(nombre=${imagenTmp.nombre})}" th:alt="${imagenTmp.nombre}" class="img-thumbnail">
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/template.html :: footer"></div>
+</body>
+</html>
